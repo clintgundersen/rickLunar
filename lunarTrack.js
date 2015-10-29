@@ -1,44 +1,79 @@
-var MONTH_LENGTH = 28;
-var MONTHS_IN_YEAR = 12;
+jQuery(document).ready(function() {
+    var MONTH_LENGTH = 28;
+    var MONTHS_IN_YEAR = 12;
 
-var MOON_ONE_CYCLE = 14;
-var MOON_TWO_CYCLE = 52;
+    var MOON_ONE_CYCLE = 14;
+    var MOON_TWO_CYCLE = 52;
 
-var year = jQuery('#year').value;
-var month = jQuery('#month').value;
-var day = jQuery('#day').value;
-var backOneButton = jQuery('#yesterday');
-var upOneButton = jQuery('#tomorrow');
-var getPhasesButton = jQuery('#getPhases');
+    var year;
+    var month;
+    var day;
 
-//values represent the state of the moons on year 1, month 1, day 1
-var moonOneOffset = 6;
-var moonTwoOffset = 40;
+    var output = jQuery('#output');
 
-//days that have passed since 1/1/1
-var totalDaysToDate = ((year * MONTHS_IN_YEAR) * MONTH_LENGTH) + (month * MONTH_LENGTH) + (day);
+    jQuery('#yesterday').click(decrementDay);
+    jQuery('#tomorrow').click(incrementDay);
+    jQuery('#getPhases').click(showMeTheCycle);
 
-var moonOneTotalCyclesToDate = Math.floor(totalDaysToDate / MOON_ONE_CYCLE);
-var moonTwoCyclesToDate = Math.floor(totalDaysToDate / MOON_TWO_CYCLE);
+    //values represent the state of the moons on year 1, month 1, day 1
+    var moonOneOffset = 0;
+    var moonTwoOffset = 0;
 
-function getLastNewMoonOne() {
-    var newMoonOne = moonOneTotalCyclesToDate * MOON_ONE_CYCLE;
-    return newMoonOne;
-}
+    //days that have passed since 1/1/1
+    var totalDaysToDate;
 
-function getLastNewMoonTwo() {
-    var newMoonTwo = moonTwoCyclesToDate * MOON_TWO_CYCLE;
-    return newMoonTwo;
-}
+    var moonOneTotalCyclesToDate = Math.floor(totalDaysToDate / MOON_ONE_CYCLE);
+    var moonTwoCyclesToDate = Math.floor(totalDaysToDate / MOON_TWO_CYCLE);
 
-function getCurrentCycleMoonOne () {
-    var currentMoonOne = totalDaysToDate - (getLastNewMoonOne() + moonOneOffset);
-    return currentMoonOne;
-}
+    function decrementDay() {
+        console.log("decrementing");
+    }
 
-function getCurrentCycleMoonTwo () {
-    var currentMoonTwo = totalDaysToDate - (getLastNewMoonTwo() + moonTwoOffset);
-    return currentMoonTwo;
-}
+    function incrementDay() {
+        console.log("incrementing");
+    }
+
+    function getLastNewMoonOne() {
+        var newMoonOne = moonOneTotalCyclesToDate * MOON_ONE_CYCLE;
+        return newMoonOne;
+    }
+
+    function getLastNewMoonTwo() {
+        var newMoonTwo = moonTwoCyclesToDate * MOON_TWO_CYCLE;
+        return newMoonTwo;
+    }
+
+    function getCurrentCycleMoonOne () {
+        var currentMoonOne = totalDaysToDate - (getLastNewMoonOne() + moonOneOffset);
+        return currentMoonOne;
+    }
+
+    function getCurrentCycleMoonTwo () {
+        var currentMoonTwo = totalDaysToDate - (getLastNewMoonTwo() + moonTwoOffset);
+        return currentMoonTwo;
+    }
+
+    function updateValues() {
+        day =  jQuery('#day').val();
+        month = jQuery('#month').val();
+        year = jQuery('#year').val();
+    }
+
+    function showMeTheCycle () {
+        updateValues();
+        totalDaysToDate = ((year * MONTHS_IN_YEAR) * MONTH_LENGTH) + (month * MONTH_LENGTH) + (day);
+        console.log(year);
+        console.log(month);
+        console.log(day);
+
+        console.log ("totalDays is: " + totalDaysToDate);
+
+        var outputString = "working";
+        output.innerHTML = "Moon One = " +
+                            getCurrentCycleMoonOne() + ". " +
+                            "Moon Two = " +
+                            getCurrentCycleMoonTwo() + ".";
+    }
+});
 
 
