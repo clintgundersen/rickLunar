@@ -2,24 +2,44 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src='lunarTrack.js'></script>
     <title>Rick's Double Lunar Tracker</title>
 </head>
 <body>
 
 <div id="input">
-<button id="yesterday">Back One</button>
-Year<input type="number" id="year" value="1"/>
-Month<input type="number" id="month" value="1"/>
-Day<input type="number" id="day" value="1"/>
-<button id="tomorrow">Forward One</button>
+    <h1>Terralm Lunar Calander</h1>
+    <div id="yearDiv" class="chunk">
+        <div><label>Year</label></div>
+        <div><input type="number" id="year" value="1240"/></div>
+    </div>
+    <div id="monthDiv" class="chunk">
+        <div><label>Month</label></div>
+        <div><input type="number" id="month" value="1"/></div>
+    </div>
+    <div id="dayDiv" class="chunk">
+
+        <div><label>Day</label></div>
+        <div>
+            <button id="yesterday" class="myButton"><<</button>
+            <input type="number" id="day" value="1"/>
+            <button id="tomorrow" class="myButton">>></button>
+        </div>
+    </div>
+    <div class="chunk">
+        <button id="getPhases" class="myButton">Get Phases</button>
+    </div>
+    <div class="chunk">
+        <div id="output">Press 'Get Phases' to calculate phase.</div>
+    </div>
 </div>
 
-<button id="getPhases">Get Phases</button>
 
-<div id="output"></div>
 
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src='lunarTrack.js'></script>
 </body>
 </html>
