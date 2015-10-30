@@ -22,19 +22,44 @@ jQuery(document).ready(function() {
     //days that have passed since 1/1/1
     var totalDaysToDate;
 
-    var moonOneTotalCyclesToDate = Math.floor(totalDaysToDate / MOON_ONE_CYCLE);
-    var moonTwoCyclesToDate = Math.floor(totalDaysToDate / MOON_TWO_CYCLE);
+    var moonOneCyclesToDate;
+    var moonTwoCyclesToDate;
 
     function decrementDay() {
+        updateValues();
         console.log("decrementing");
+        jQuery('#day').val(parseInt(day - 1));
+        updateValues();
+        showMeTheCycle();
     }
 
     function incrementDay() {
+        updateValues();
         console.log("incrementing");
+        if ( day == MONTH_LENGTH) {
+            if (month == MONTHS_IN_YEAR) {
+                //start a new year and a new month
+                console.log("happy new years");
+                year++;
+                month = 1;
+                day = 1;
+            } else {
+                //start a new month
+                console.log("new month, from:" + month);
+                month = month + 2; //to offset the -1 to account for no year 0
+                console.log("to:" + month);
+                day = 1;
+            }
+        } else {
+            day++;
+        }
+        jQuery('#day').val(day);
+        updateValues();
+        showMeTheCycle();
     }
 
     function getLastNewMoonOne() {
-        var newMoonOne = moonOneTotalCyclesToDate * MOON_ONE_CYCLE;
+        var newMoonOne = moonOneCyclesToDate * MOON_ONE_CYCLE;
         return newMoonOne;
     }
 
@@ -54,25 +79,37 @@ jQuery(document).ready(function() {
     }
 
     function updateValues() {
-        day =  jQuery('#day').val();
-        month = jQuery('#month').val();
-        year = jQuery('#year').val();
+        year = parseInt(jQuery('#year').val()) - 1;
+        month = parseInt(jQuery('#month').val()) - 1;
+        day =  parseInt(jQuery('#day').val());
     }
 
     function showMeTheCycle () {
         updateValues();
-        totalDaysToDate = ((year * MONTHS_IN_YEAR) * MONTH_LENGTH) + (month * MONTH_LENGTH) + (day);
         console.log(year);
         console.log(month);
         console.log(day);
 
+        var daysInYears = year * MONTHS_IN_YEAR * MONTH_LENGTH;
+        console.log ("days in the years:" + daysInYears);
+        var daysInMonths = month * MONTH_LENGTH;
+        console.log ("days in the months:" + daysInMonths);
+        console.log ("days in the days:" + day);
+
+        totalDaysToDate = daysInYears + daysInMonths + day;
         console.log ("totalDays is: " + totalDaysToDate);
 
-        var outputString = "working";
-        output.innerHTML = "Moon One = " +
-                            getCurrentCycleMoonOne() + ". " +
-                            "Moon Two = " +
-                            getCurrentCycleMoonTwo() + ".";
+        moonOneCyclesToDate = Math.floor(totalDaysToDate / MOON_ONE_CYCLE);
+        moonTwoCyclesToDate = Math.floor(totalDaysToDate / MOON_TWO_CYCLE);
+
+        console.log ("moon One Cycles:" + moonOneCyclesToDate);
+        console.log ("moon Two Cycles:" + moonTwoCyclesToDate);
+
+        console.log ("last new One:" + getLastNewMoonOne());
+        console.log ("last new Two:" + getLastNewMoonTwo());
+
+        console.log("current cycle one:" + getCurrentCycleMoonOne());
+        console.log("current cycle two:" + getCurrentCycleMoonTwo());
     }
 });
 
